@@ -1,0 +1,22 @@
+message = "This is the leap year checker"
+
+print(message)
+
+year = int(input("What year do you want to check? "))
+
+# on every year that is evenly divisible by 4
+
+# # **except** every year that is evenly divisible by 100
+
+# **unless** the year is also evenly divisible by 400
+
+if year % 4 != 0:
+  print("Not leap year.")
+elif year % 4 == 0 and year % 100 == 0 and year % 400 == 0:
+  print("Leap year.")
+elif year % 4 == 0 and year % 100 != 0 and year % 400 != 0:
+  print("Leap year.")
+elif year % 4 == 0 and year % 100 == 0 and year % 400 != 0:
+  print("Not leap year.")
+else:
+  print("Not a leap year.")
