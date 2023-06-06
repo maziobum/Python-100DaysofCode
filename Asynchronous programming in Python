@@ -1,0 +1,50 @@
+import asyncio
+import random
+
+# Positive number from stdin or cmdline
+async def get_positive_number():
+    while True:
+        try:
+            n = int(input("Enter a positive number: "))
+            if n <= 0:
+                print("This is a negative number. Please enter a positive number.")
+            else:
+                return n
+        except ValueError:
+            print("This is not a number. Please enter a positive number.")
+
+async def fib(n):
+  if n == 0:
+    return 0
+  elif n == 1:
+    return 1
+  else:
+    #a random delay of up to 1 second
+    await asyncio.sleep(random.random())
+
+    fib_n_minus_1 = await fib(n - 1)
+    fib_n_minus_2 = await fib(n - 2)
+
+    return fib_n_minus_1 + fib_n_minus_2
+
+
+async def main():
+
+  n = await get_positive_number()
+ 
+  # 2 asynchronous/concurrent calls to a function fib
+  first_call = asyncio.create_task(fib(n))
+  second_call = asyncio.create_task(fib(n))
+
+  await asyncio.wait([first_call, second_call])
+
+  if first_call.done():
+    result = first_call.result()
+    print(f"The Fibonacci number is: {result}. The first call finished first.")
+  else:
+    result = second_call.result()
+    print(
+      f"The Fibonacci number is: {result}. The second call finished first.")
+
+
+asyncio.run(main())
